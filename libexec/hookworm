@@ -18,7 +18,7 @@ hookworm_ask_reboot() {
 
 # Prints and runs a command
 hookworm_eval() {
-    print_purple "*> Running \"$*\"..."
+    hookworm_print_purple "*> Running \"$*\"..."
     eval $@
     echo
 }
