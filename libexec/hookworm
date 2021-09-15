@@ -3,12 +3,26 @@ hookworm_print_purple() {
     printf "\033[35m""$1""\033[00m\n"
 }
 
+
+# Asks whether to reboot or do nothing
+hookworm_ask_reboot() {
+    printf "\033[35m*> Restart OS [r]? \033[00m"
+    read action
+
+    case "$action" in
+        "R" | "r") run_verbose reboot ;;
+        *) return 0 ;;
+    esac
+}
+
+
 # Prints and runs a command
 hookworm_eval() {
     print_purple "*> Running \"$*\"..."
     eval $@
     echo
 }
+
 
 # Execute the hooks
 hookworm_main() {
