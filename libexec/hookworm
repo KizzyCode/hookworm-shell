@@ -1,0 +1,20 @@
+# Print purple
+hookworm_print_purple() {
+    printf "\033[35m""$1""\033[00m\n"
+}
+
+# Prints and runs a command
+hookworm_eval() {
+    print_purple "*> Running \"$*\"..."
+    eval $@
+    echo
+}
+
+# Execute the hooks
+hookworm_main() {
+    local HOOK_DIR="$1"
+
+    for HOOK in `ls "$HOOK_DIR" | sort -h`; do
+        hookworm_eval "$HOOK_DIR/$HOOK"
+    done
+}
