@@ -1,25 +1,33 @@
 # Print purple
-hookworm_print_purple() {
-    printf "\033[35m""$1""\033[00m\n"
+hookworm_print() {
+    local COLOR="$1"
+    local MESSAGE="${*:2}"
+
+    case "$COLOR" in
+        "purple" | *) printf "\033[35m$MESSAGE\033[00m\n" ;;
+    esac
 }
 
 
 # Prints and runs a command
 hookworm_eval() {
-    hookworm_print_purple "*> Running \"$*\"..."
+    hookworm_print "purple" "*> Running \"$*\"..."
     eval $@
     echo
 }
 
 
-# Asks whether to reboot or do nothing
-hookworm_ask_reboot() {
-    printf "\033[35m*> Restart OS [r]? \033[00m"
-    read action
+# Asks whether to perform an action or not
+hookworm_ask() {
+    local QUESTION="$1"
+    local CONFIRM="$2"
 
-    case "$action" in
-        "R" | "r") hookworm_eval reboot ;;
-        *) return 0 ;;
+    printf "\033[35m?> $QUESTION [$CONFIRM]? \033[00m"
+    read INPUT
+
+    case "$INPUT" in
+        "$CONFIRM" ) return 0 ;;
+        *) return 1 ;;
     esac
 }
 
