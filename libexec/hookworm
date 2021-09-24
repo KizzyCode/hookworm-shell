@@ -1,7 +1,7 @@
 # Print purple
 hookworm_print() {
-    local COLOR="$1"
-    local MESSAGE="${*:2}"
+    local COLOR="$1"; shift
+    local MESSAGE="$*"
 
     case "$COLOR" in
         "purple" | *) printf "\033[35m$MESSAGE\033[00m\n" ;;
